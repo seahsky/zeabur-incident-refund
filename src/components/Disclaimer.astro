@@ -1,0 +1,14 @@
+---
+import type { Dictionary } from '../i18n/dictionary';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="disclaimer" role="note" aria-label={t.disclaimer.heading}>
+  <h2>{t.disclaimer.heading}</h2>
+  <p>{t.disclaimer.body}</p>
+</section>

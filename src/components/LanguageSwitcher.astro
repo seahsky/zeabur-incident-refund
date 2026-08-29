@@ -1,0 +1,28 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const current = Astro.currentLocale;
+const zhUrl = getRelativeLocaleUrl('zh-TW', '/');
+const enUrl = getRelativeLocaleUrl('en', '/');
+---
+
+<ul class="lang-switcher">
+  <li>
+    <a
+      href={zhUrl}
+      class={current === 'zh-TW' ? 'is-active' : ''}
+      aria-current={current === 'zh-TW' ? 'page' : undefined}
+    >
+      繁體中文
+    </a>
+  </li>
+  <li>
+    <a
+      href={enUrl}
+      class={current === 'en' ? 'is-active' : ''}
+      aria-current={current === 'en' ? 'page' : undefined}
+    >
+      English
+    </a>
+  </li>
+</ul>

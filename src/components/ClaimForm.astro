@@ -1,0 +1,449 @@
+---
+import type { Dictionary } from '../i18n/dictionary';
+
+interface Props {
+  lang: 'zh-TW' | 'en';
+  t: Dictionary;
+}
+
+const { lang, t } = Astro.props;
+
+const otherPointKeys = [
+  'disabledProjectNotRunning',
+  'uniformCostPattern',
+  'localOnlyIsolation',
+  'ruledOutLocalCompromise',
+] as const;
+---
+
+<section id="claim-form" data-claim-form data-lang={lang} class="claim-form">
+  <h2>{t.form.heading}</h2>
+  <p>{t.form.intro}</p>
+
+  <!-- 1. Account -->
+  <fieldset>
+    <legend>{t.form.account.title}</legend>
+
+    <div class="field">
+      <label for="accountName">{t.form.account.accountNameLabel}</label>
+      <input
+        type="text"
+        id="accountName"
+        data-path="accountName"
+        placeholder={t.form.account.accountNamePlaceholder}
+      />
+    </div>
+
+    <p>{t.form.account.servicesLabel}</p>
+    <div class="row-group" id="affectedServiceRows"></div>
+    <template id="affectedServiceRowTemplate">
+      <div class="row" data-row>
+        <div class="field">
+          <label>
+            {t.form.account.serviceNameLabel}
+            <input
+              type="text"
+              data-field="serviceName"
+              placeholder={t.form.account.serviceNamePlaceholder}
+            />
+          </label>
+        </div>
+        <div class="field">
+          <label>
+            {t.form.account.credentialNameLabel}
+            <input
+              type="text"
+              data-field="credentialName"
+              placeholder={t.form.account.credentialNamePlaceholder}
+            />
+          </label>
+        </div>
+        <button type="button" class="remove-row-btn" data-action="remove-row">
+          {t.form.common.removeRow}
+        </button>
+      </div>
+    </template>
+    <button type="button" class="add-row-btn" id="addAffectedServiceRowBtn">
+      {t.form.common.addRow}
+    </button>
+  </fieldset>
+
+  <!-- 2. Loss summary -->
+  <fieldset>
+    <legend>{t.form.lossSummary.title}</legend>
+
+    <div class="field">
+      <label for="lossSummary-provider">{t.form.lossSummary.providerLabel}</label>
+      <input
+        type="text"
+        id="lossSummary-provider"
+        data-path="lossSummary.provider"
+        placeholder={t.form.lossSummary.providerPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="lossSummary-abusedDate">{t.form.lossSummary.abusedDateLabel}</label>
+      <input
+        type="text"
+        id="lossSummary-abusedDate"
+        data-path="lossSummary.abusedDate"
+        placeholder={t.form.lossSummary.abusedDatePlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="lossSummary-normalCost">{t.form.lossSummary.normalCostLabel}</label>
+      <input
+        type="text"
+        id="lossSummary-normalCost"
+        data-path="lossSummary.normalCost"
+        placeholder={t.form.lossSummary.normalCostPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="lossSummary-abnormalCost">{t.form.lossSummary.abnormalCostLabel}</label>
+      <input
+        type="text"
+        id="lossSummary-abnormalCost"
+        data-path="lossSummary.abnormalCost"
+        placeholder={t.form.lossSummary.abnormalCostPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="lossSummary-rechargeCount">{t.form.lossSummary.rechargeCountLabel}</label>
+      <input
+        type="text"
+        id="lossSummary-rechargeCount"
+        data-path="lossSummary.rechargeCount"
+        placeholder={t.form.lossSummary.rechargeCountPlaceholder}
+      />
+    </div>
+  </fieldset>
+
+  <!-- 3. Evidence -->
+  <fieldset>
+    <legend>{t.form.evidence.title}</legend>
+
+    <h3>{t.form.evidence.timeHeading}</h3>
+    <div class="field">
+      <label for="evidence-timeRangeUtc">{t.form.evidence.timeRangeUtcLabel}</label>
+      <input
+        type="text"
+        id="evidence-timeRangeUtc"
+        data-path="evidence.timeRangeUtc"
+        placeholder={t.form.evidence.timeRangeUtcPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="evidence-timeRangeTaipei">{t.form.evidence.timeRangeTaipeiLabel}</label>
+      <input
+        type="text"
+        id="evidence-timeRangeTaipei"
+        data-path="evidence.timeRangeTaipei"
+        placeholder={t.form.evidence.timeRangeTaipeiPlaceholder}
+      />
+    </div>
+    <p class="help">{t.form.evidence.timeHelp}</p>
+
+    <h3>{t.form.evidence.amountHeading}</h3>
+    <div class="field">
+      <label for="evidence-totalAmount">{t.form.evidence.totalAmountLabel}</label>
+      <input
+        type="text"
+        id="evidence-totalAmount"
+        data-path="evidence.totalAmount"
+        placeholder={t.form.evidence.totalAmountPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="evidence-normalBaseline">{t.form.evidence.normalBaselineLabel}</label>
+      <input
+        type="text"
+        id="evidence-normalBaseline"
+        data-path="evidence.normalBaseline"
+        placeholder={t.form.evidence.normalBaselinePlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="evidence-multiplier">{t.form.evidence.multiplierLabel}</label>
+      <input
+        type="text"
+        id="evidence-multiplier"
+        data-path="evidence.multiplier"
+        placeholder={t.form.evidence.multiplierPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="evidence-affectedKeyCount">{t.form.evidence.affectedKeyCountLabel}</label>
+      <input
+        type="text"
+        id="evidence-affectedKeyCount"
+        data-path="evidence.affectedKeyCount"
+        placeholder={t.form.evidence.affectedKeyCountPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="evidence-perKeyRange">{t.form.evidence.perKeyRangeLabel}</label>
+      <input
+        type="text"
+        id="evidence-perKeyRange"
+        data-path="evidence.perKeyRange"
+        placeholder={t.form.evidence.perKeyRangePlaceholder}
+      />
+    </div>
+
+    <p>{t.form.evidence.usageRowsLabel}</p>
+    <div class="row-group" id="apiKeyUsageRows"></div>
+    <template id="apiKeyUsageRowTemplate">
+      <div class="row" data-row>
+        <div class="field">
+          <label>
+            {t.form.evidence.keyLabelLabel}
+            <input
+              type="text"
+              data-field="keyLabel"
+              placeholder={t.form.evidence.keyLabelPlaceholder}
+            />
+          </label>
+        </div>
+        <div class="field">
+          <label>
+            {t.form.evidence.keyAmountLabel}
+            <input
+              type="text"
+              data-field="amount"
+              placeholder={t.form.evidence.keyAmountPlaceholder}
+            />
+          </label>
+        </div>
+        <div class="field">
+          <label>
+            {t.form.evidence.keyNoteLabel}
+            <input
+              type="text"
+              data-field="note"
+              placeholder={t.form.evidence.keyNotePlaceholder}
+            />
+          </label>
+        </div>
+        <button type="button" class="remove-row-btn" data-action="remove-row">
+          {t.form.common.removeRow}
+        </button>
+      </div>
+    </template>
+    <button type="button" class="add-row-btn" id="addApiKeyUsageRowBtn">
+      {t.form.common.addRow}
+    </button>
+
+    <h3>{t.form.evidence.sourceIpHeading}</h3>
+    <div class="field-radio">
+      <input
+        type="radio"
+        id="evidence-sourceIpMode-known"
+        name="sourceIpMode"
+        data-path="evidence.sourceIpMode"
+        value="known"
+      />
+      <label for="evidence-sourceIpMode-known">{t.form.evidence.sourceIpKnown}</label>
+    </div>
+    <div class="field-radio">
+      <input
+        type="radio"
+        id="evidence-sourceIpMode-unknown"
+        name="sourceIpMode"
+        data-path="evidence.sourceIpMode"
+        value="unknown"
+        checked
+      />
+      <label for="evidence-sourceIpMode-unknown">{t.form.evidence.sourceIpUnknown}</label>
+    </div>
+    <div class="field">
+      <label for="evidence-sourceIpList">{t.form.evidence.sourceIpListLabel}</label>
+      <input
+        type="text"
+        id="evidence-sourceIpList"
+        data-path="evidence.sourceIpList"
+        placeholder={t.form.evidence.sourceIpListPlaceholder}
+      />
+    </div>
+
+    <h3>{t.form.evidence.otherHeading}</h3>
+    <p>{t.form.evidence.otherIntro}</p>
+
+    {otherPointKeys.map((key) => (
+      <Fragment>
+        <div class="field-checkbox">
+          <input
+            type="checkbox"
+            id={`evidence-other-${key}-checked`}
+            data-path={`evidence.other.${key}.checked`}
+          />
+          <label for={`evidence-other-${key}-checked`}>
+            {t.form.evidence.otherPoints[key].label}
+          </label>
+        </div>
+        <div class="field">
+          <label for={`evidence-other-${key}-detail`}>{t.form.common.optional}</label>
+          <input
+            type="text"
+            id={`evidence-other-${key}-detail`}
+            data-path={`evidence.other.${key}.detail`}
+            placeholder={t.form.evidence.otherPoints[key].detailPlaceholder}
+          />
+        </div>
+      </Fragment>
+    ))}
+  </fieldset>
+
+  <!-- 4. Other services -->
+  <fieldset>
+    <legend>{t.form.otherServices.title}</legend>
+
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="otherServices-checkedAllProviders"
+        data-path="otherServicesConfirmation.checkedAllProviders"
+      />
+      <label for="otherServices-checkedAllProviders">
+        {t.form.otherServices.checkedAllProvidersLabel}
+      </label>
+    </div>
+    <div class="field">
+      <label for="otherServices-anomaliesFound">{t.form.otherServices.anomaliesFoundLabel}</label>
+      <input
+        type="text"
+        id="otherServices-anomaliesFound"
+        data-path="otherServicesConfirmation.anomaliesFound"
+        placeholder={t.form.otherServices.anomaliesFoundPlaceholder}
+      />
+    </div>
+    <div class="field">
+      <label for="otherServices-netLossScope">{t.form.otherServices.netLossScopeLabel}</label>
+      <input
+        type="text"
+        id="otherServices-netLossScope"
+        data-path="otherServicesConfirmation.netLossScope"
+        placeholder={t.form.otherServices.netLossScopePlaceholder}
+      />
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="otherServices-allRotatedConfirmed"
+        data-path="otherServicesConfirmation.allRotatedConfirmed"
+      />
+      <label for="otherServices-allRotatedConfirmed">
+        {t.form.otherServices.allRotatedConfirmedLabel}
+      </label>
+    </div>
+  </fieldset>
+
+  <!-- 5. Remediation -->
+  <fieldset>
+    <legend>{t.form.remediation.title}</legend>
+
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="remediation-credentialsRevoked"
+        data-path="remediation.credentialsRevoked"
+      />
+      <label for="remediation-credentialsRevoked">
+        {t.form.remediation.credentialsRevokedLabel}
+      </label>
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="remediation-zeaburTokensRevoked"
+        data-path="remediation.zeaburTokensRevoked"
+      />
+      <label for="remediation-zeaburTokensRevoked">
+        {t.form.remediation.zeaburTokensRevokedLabel}
+      </label>
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="remediation-autoRechargeBlocked"
+        data-path="remediation.autoRechargeBlocked"
+      />
+      <label for="remediation-autoRechargeBlocked">
+        {t.form.remediation.autoRechargeBlockedLabel}
+      </label>
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="remediation-autoRechargeNotApplicable"
+        data-path="remediation.autoRechargeNotApplicable"
+      />
+      <label for="remediation-autoRechargeNotApplicable">
+        {t.form.remediation.autoRechargeNotApplicableLabel}
+      </label>
+    </div>
+    <div class="field">
+      <label for="remediation-rotationInProgress">
+        {t.form.remediation.rotationInProgressLabel}
+      </label>
+      <input
+        type="text"
+        id="remediation-rotationInProgress"
+        data-path="remediation.rotationInProgress"
+        placeholder={t.form.remediation.rotationInProgressPlaceholder}
+      />
+    </div>
+  </fieldset>
+
+  <!-- 6. Requests -->
+  <fieldset>
+    <legend>{t.form.requests.title}</legend>
+
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="requests-wantsCompensation"
+        data-path="requests.wantsCompensation"
+        checked
+      />
+      <label for="requests-wantsCompensation">{t.form.requests.wantsCompensationLabel}</label>
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="requests-willingToProvideEvidence"
+        data-path="requests.willingToProvideEvidence"
+        checked
+      />
+      <label for="requests-willingToProvideEvidence">
+        {t.form.requests.willingToProvideEvidenceLabel}
+      </label>
+    </div>
+    <div class="field-checkbox">
+      <input
+        type="checkbox"
+        id="requests-willSupplementIp"
+        data-path="requests.willSupplementIp"
+        checked
+      />
+      <label for="requests-willSupplementIp">{t.form.requests.willSupplementIpLabel}</label>
+    </div>
+  </fieldset>
+
+  <!-- Mode toggle + output -->
+  <div class="output-section">
+    <h2>{t.output.heading}</h2>
+    <div class="mode-toggle">
+      <button type="button" data-mode="ticket" class="active">{t.output.modeTicket}</button>
+      <button type="button" data-mode="email">{t.output.modeEmail}</button>
+    </div>
+    <div id="validationBanner" role="status" aria-live="polite"></div>
+    <textarea id="previewOutput" readonly rows="18" aria-label={t.output.heading}></textarea>
+    <div class="output-actions">
+      <button type="button" id="copyBtn">{t.output.copy}</button>
+      <button type="button" id="downloadBtn">{t.output.download}</button>
+    </div>
+  </div>
+</section>
+
+<script src="../scripts/main.ts"></script>
