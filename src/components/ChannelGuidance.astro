@@ -1,0 +1,54 @@
+---
+import type { Dictionary } from '../i18n/dictionary';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="channel-section" aria-labelledby="channel-heading">
+  <h2 id="channel-heading">{t.channel.heading}</h2>
+  <p>{t.channel.intro}</p>
+
+  <div class="incident-facts">
+    <h3>{t.incidentFacts.heading}</h3>
+    <p>{t.incidentFacts.summary}</p>
+    <p>{t.incidentFacts.credentialListIntro}</p>
+    <ul>
+      {t.incidentFacts.credentialList.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>{t.incidentFacts.noEvidenceFound}</p>
+  </div>
+
+  <div class="channel-card channel-card--primary">
+    <h3>{t.channel.ticket.title}</h3>
+    <p>{t.channel.ticket.body}</p>
+    <a
+      class="cta-button"
+      href={t.channel.ticket.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {t.channel.ticket.ctaLabel}
+    </a>
+    <p class="category-hint">{t.channel.ticket.categoryHint}</p>
+  </div>
+
+  <div class="channel-card channel-card--secondary">
+    <h3>{t.channel.emailSecondary.title}</h3>
+    <p>{t.channel.emailSecondary.body}</p>
+  </div>
+
+  <div class="tos-caveats">
+    <h3>{t.channel.tosCaveats.heading}</h3>
+    <p class="source-note">{t.channel.tosCaveats.sourceNote}</p>
+    <ul>
+      <li>{t.channel.tosCaveats.liabilityCap}</li>
+      <li>{t.channel.tosCaveats.promptReporting}</li>
+      <li>{t.channel.tosCaveats.noFixedFormula}</li>
+      <li>{t.channel.tosCaveats.arbitrationNote}</li>
+    </ul>
+  </div>
+</section>

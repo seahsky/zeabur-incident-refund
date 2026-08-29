@@ -1,0 +1,21 @@
+---
+import type { Dictionary } from '../i18n/dictionary';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__top">
+      <a class="skip-link" href="#claim-form">{t.nav.skipToForm}</a>
+      <LanguageSwitcher />
+    </div>
+    <h1 class="hero-heading">{t.hero.heading}</h1>
+    <p class="hero-subheading">{t.hero.subheading}</p>
+  </div>
+</header>

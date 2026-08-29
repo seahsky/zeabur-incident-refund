@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import ChannelGuidance from '../components/ChannelGuidance.astro';
+import ClaimForm from '../components/ClaimForm.astro';
+import { useTranslations, type Locale } from '../i18n/utils';
+
+const lang = (Astro.currentLocale ?? 'zh-TW') as Locale;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  title={t.meta.title}
+  description={t.meta.description}
+  lang={lang}
+  noscriptText={t.output.noscript}
+>
+  <Header t={t} />
+  <main class="container">
+    <Disclaimer t={t} />
+    <ChannelGuidance t={t} />
+    <ClaimForm lang={lang} t={t} />
+  </main>
+  <footer class="site-footer">
+    <p>{t.footer.notAffiliated}</p>
+    <p>
+      <a href="https://github.com/seahsky/zeabur-incident-refund" target="_blank" rel="noopener noreferrer">
+        {t.footer.sourceLink}
+      </a>
+    </p>
+  </footer>
+</BaseLayout>
